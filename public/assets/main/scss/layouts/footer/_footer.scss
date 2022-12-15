@@ -1,0 +1,47 @@
+/************************** 
+* Footer
+***************************/
+
+.footer {
+    padding-left: $fixed-with-layout;
+    background-color: $background-white;
+    // position: fixed;
+    bottom: 0;
+
+    width: 100%;
+    @extend .shadow-header;
+    @extend .transition-layouts;
+    .copyright {
+        padding: 0.9375rem;
+        p {
+            text-align: $text-center;
+        }
+        a {
+            color: $primary;
+        }
+    }
+    @include respond("phone-land") {
+        padding-left: 0;
+    }
+}
+
+.menu-toggle {
+    .footer {
+        padding-left: 5rem;
+    }
+}
+
+/************************** 
+* Media specifique
+***************************/
+
+[data-sidebar-style="mini"] .footer {
+    padding-left: 6.25rem;
+    position: inherit;
+}
+
+
+[data-sidebar-style="overlay"] .footer {
+
+    position: inherit;
+}

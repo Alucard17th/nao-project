@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="18.686" viewBox="0 0 20 18.686">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        fill: #292459;
+        fill-rule: evenodd;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect class="cls-1" width="20" height="18.686"/>
+    </clipPath>
+  </defs>
+  <g id="Grille_de_répétition_8" data-name="Grille de répétition 8" class="cls-2">
+    <g id="Groupe_49" data-name="Groupe 49" transform="translate(0 -1.314)">
+      <path id="Tracé_39" data-name="Tracé 39" class="cls-3" d="M16.875,20.907a.657.657,0,0,1,.657-.657H20.16a.657.657,0,0,1,0,1.314H18.189v1.971a.657.657,0,0,1-1.314,0Z" transform="translate(-7.611 -9.133)"/>
+      <path id="Tracé_38" data-name="Tracé 38" class="cls-3" d="M15.66,15.75a.657.657,0,0,1,.657.657v2.628a.657.657,0,0,1-.657.657H13.032a.657.657,0,0,1,0-1.314H15V16.407A.657.657,0,0,1,15.66,15.75Z" transform="translate(-5.581 -7.103)"/>
+      <path id="Tracé_40" data-name="Tracé 40" class="cls-3" d="M1.25,5.987V18.445A1.248,1.248,0,0,0,2.5,19.69h15a1.248,1.248,0,0,0,1.25-1.246V5.987ZM2.5,2.25A2.5,2.5,0,0,0,0,4.741v13.7a2.5,2.5,0,0,0,2.5,2.491h15A2.5,2.5,0,0,0,20,18.445V4.741A2.5,2.5,0,0,0,17.5,2.25Z" transform="translate(0 -0.936)"/>
+    </g>
+  </g>
+</svg>

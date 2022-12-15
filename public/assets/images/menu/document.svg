@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14.251" height="19.951" viewBox="0 0 14.251 19.951">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="document" transform="translate(-6.75 -2.251)">
+    <path id="Tracé_13" data-name="Tracé 13" class="cls-1" d="M20.787,7.452,15.8,2.464a.646.646,0,0,0-.5-.213H8.175A1.429,1.429,0,0,0,6.75,3.676v17.1A1.429,1.429,0,0,0,8.175,22.2h11.4A1.429,1.429,0,0,0,21,20.777V7.951a.648.648,0,0,0-.213-.5ZM15.3,3.96l3.99,3.99H15.3Zm4.275,16.816H8.175V3.675h5.7V7.951A1.429,1.429,0,0,0,15.3,9.376h4.275Z"/>
+    <path id="Tracé_14" data-name="Tracé 14" class="cls-1" d="M11.25,24.75H19.8v1.425H11.25Z" transform="translate(-1.65 -8.249)"/>
+    <path id="Tracé_15" data-name="Tracé 15" class="cls-1" d="M11.25,18H19.8v1.425H11.25Z" transform="translate(-1.65 -5.774)"/>
+  </g>
+</svg>

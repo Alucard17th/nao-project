@@ -1,0 +1,13 @@
+<svg id="plus-circle" xmlns="http://www.w3.org/2000/svg" width="14.972" height="14.972" viewBox="0 0 14.972 14.972">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #292459;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="Tracé_30" data-name="Tracé 30" class="cls-1" d="M12.086,7.875a.468.468,0,0,1,.468.468v3.743a.468.468,0,0,1-.468.468H8.343a.468.468,0,0,1,0-.936h3.275V8.343A.468.468,0,0,1,12.086,7.875Z" transform="translate(-4.6 -4.6)"/>
+  <path id="Tracé_31" data-name="Tracé 31" class="cls-1" d="M16.875,17.343a.468.468,0,0,1,.468-.468h3.743a.468.468,0,1,1,0,.936H17.811v3.275a.468.468,0,0,1-.936,0Z" transform="translate(-9.857 -9.857)"/>
+  <path id="Tracé_32" data-name="Tracé 32" class="cls-1" d="M7.486,14.036a6.55,6.55,0,1,0-6.55-6.55A6.55,6.55,0,0,0,7.486,14.036Zm0,.936A7.486,7.486,0,1,0,0,7.486,7.486,7.486,0,0,0,7.486,14.972Z"/>
+</svg>

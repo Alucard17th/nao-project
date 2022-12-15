@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.458" height="19.953" viewBox="0 0 17.458 19.953">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7b73ce;
+      }
+    </style>
+  </defs>
+  <g id="archive-solid" transform="translate(-4 -2)">
+    <path id="Tracé_50" data-name="Tracé 50" class="cls-1" d="M13.985,20.374l-.879.873-.879-.873L11.859,20H5v7.482a1.247,1.247,0,0,0,1.247,1.247H19.964a1.247,1.247,0,0,0,1.247-1.247V20H14.353Zm1.615,2.12a.624.624,0,0,1-.624.624H11.235a.624.624,0,1,1,0-1.247h3.741A.624.624,0,0,1,15.6,22.494Z" transform="translate(-0.376 -6.777)"/>
+    <path id="Tracé_51" data-name="Tracé 51" class="cls-1" d="M27.3,12H24.906v.081a1.871,1.871,0,0,1-.549,1.322L22,15.741h6.235V12.935A.935.935,0,0,0,27.3,12Z" transform="translate(-6.777 -3.765)"/>
+    <path id="Tracé_52" data-name="Tracé 52" class="cls-1" d="M7.866,13.4a1.871,1.871,0,0,1-.549-1.322V12H4.935A.935.935,0,0,0,4,12.935v2.806h6.235Z" transform="translate(0 -3.765)"/>
+    <path id="Tracé_53" data-name="Tracé 53" class="cls-1" d="M15.475,12.712l3.978-3.959a.624.624,0,1,0-.86-.885L16.1,10.33V2.624a.624.624,0,0,0-1.247,0v7.732L12.358,7.892a.624.624,0,1,0-.879.885Z" transform="translate(-2.746 0)"/>
+  </g>
+</svg>

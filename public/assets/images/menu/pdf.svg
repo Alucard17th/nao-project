@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19.681" height="19.681" viewBox="0 0 19.681 19.681">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Groupe_13" data-name="Groupe 13" transform="translate(-891 -1050)">
+    <g id="document-pdf" transform="translate(891 1050)">
+      <path id="Tracé_24" data-name="Tracé 24" class="cls-1" d="M31.217,19.406V18H27v7.029h1.406V22.217h2.109V20.812H28.406V19.406Z" transform="translate(-11.536 -8.159)"/>
+      <path id="Tracé_25" data-name="Tracé 25" class="cls-1" d="M19.687,25.029H16.875V18h2.812A2.111,2.111,0,0,1,21.8,20.109V22.92a2.111,2.111,0,0,1-2.109,2.109Zm-1.406-1.406h1.406a.7.7,0,0,0,.7-.7V20.109a.7.7,0,0,0-.7-.7H18.281Z" transform="translate(-7.737 -8.159)"/>
+      <path id="Tracé_26" data-name="Tracé 26" class="cls-1" d="M10.265,18H6.75v7.029H8.156V22.92h2.109a1.408,1.408,0,0,0,1.406-1.406V19.406A1.407,1.407,0,0,0,10.265,18ZM8.156,21.515V19.406h2.109v2.109Z" transform="translate(-3.938 -8.159)"/>
+      <path id="Tracé_27" data-name="Tracé 27" class="cls-1" d="M16.308,10.685V7.873a.64.64,0,0,0-.211-.492l-4.92-4.92a.639.639,0,0,0-.492-.211H3.656A1.41,1.41,0,0,0,2.25,3.656v16.87a1.406,1.406,0,0,0,1.406,1.406H14.9V20.525H3.656V3.656H9.279V7.873a1.41,1.41,0,0,0,1.406,1.406H14.9v1.406ZM10.685,7.873V3.937l3.936,3.936Z" transform="translate(-2.25 -2.25)"/>
+    </g>
+  </g>
+</svg>
