@@ -9,6 +9,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
+use Config;
+use Response;
+
 class FicheVTController extends Controller
 {
     //
@@ -47,7 +50,14 @@ class FicheVTController extends Controller
                 ]
             );
 
+            
+
             if($fichierVT){
+                // GENERATE AND STORE FVT PDF FILE 
+                view()->share('fichierVT', $fichierVT);
+                $pdfFvtName = $fichierVT->id.'_ficheVT';
+                $pdf = Pdf::loadView('documents.pdf-template', $fichierVT->toArray())->save(public_path().'/storage/pdfs/'.$pdfFvtName.'.pdf');
+        
                 $final_notifiables = [];
                 array_push($final_notifiables, (object)[ 'id' => 4, 'name' => 'Direction Technique']);
                 $task = new TodoList();
@@ -120,23 +130,48 @@ class FicheVTController extends Controller
                 $task->user()->associate(Auth::user()->id); //update the model
                 $task->save();
 
-                // CREATE GOOGLE AGENDA VT EVENT with date 
-                $event = new Event;
-                $event->name = 'Rendez-vous visite technique';
-                $rbeDate = Carbon::parse($request['date_vt']);
-                $rbeDateEnd = (clone $rbeDate)->addHour();
-                $event->startDateTime = $rbeDate;
-                $event->endDateTime = $rbeDateEnd;
-                $event->save();
+                
+                try {
+                    Config::set('google-calendar', [
+                        'auth_profiles' => [
+                            'service_account' => [
+                                // 'credentials_json' => storage_path('app/google-calendar/api-key-' . auth()->user()->id . '.json'),
+                                'credentials_json' => storage_path('app/google-calendar/service-account-credentials.json'),
+                            ]
+                        ],
+                        'calendar_id' => Auth::user()->calendar_id,
+                    ] + config('google-calendar'));
+                    
+                    // CREATE GOOGLE AGENDA VT EVENT with date 
+                    
+                    // $event = new Event;
+                    $event = Event::create([
+                        'name' => 'A new event',
+                        'startDateTime' => Carbon::now(),
+                        'endDateTime' => Carbon::now()->addHour(),
+                     ]);
+                    // $event->name = 'Rendez-vous visite technique';
+                    // $rbeDate = Carbon::parse($request['date_vt']);
+                    // $rbeDateEnd = (clone $rbeDate)->addHour();
+                    // $event->startDateTime = $rbeDate;
+                    // $event->endDateTime = $rbeDateEnd;
+                    // $event->save();
 
-                // CREATE GOOGLE AGENDA RBE EVENT with date
-                $event = new Event;
-                $event->name = 'Rendez-vous RBE';
-                $rbeDate = Carbon::parse($request['date_rbe']);
-                $rbeDateEnd = (clone $rbeDate)->addHour();
-                $event->startDateTime = $rbeDate;
-                $event->endDateTime = $rbeDateEnd;
-                $event->save();
+                    // CREATE GOOGLE AGENDA RBE EVENT with date
+                    // $event = new Event;
+                    // $event->name = 'Rendez-vous RBE';
+                    // $rbeDate = Carbon::parse($request['date_rbe']);
+                    // $rbeDateEnd = (clone $rbeDate)->addHour();
+                    // $event->startDateTime = $rbeDate;
+                    // $event->endDateTime = $rbeDateEnd;
+                    // $event->save();
+                } 
+                catch(\Exception $error){
+                    return redirect()
+                    ->route('fichevt.create',['client_id' => $request['client_id']])
+                    ->with('calendar-error', 'Votre ID d\'agenda ne correspond pas!');
+                    // return $error->getMessage();
+                }
             }
 
             $isFvtCreated = FicheVT::where('client_id', $request['client_id'])->first();
@@ -191,9 +226,14 @@ class FicheVTController extends Controller
     {   
         $fichierVT = FicheVT::where('id', $request['fiche_id'])->get();
         view()->share('fichierVT', $fichierVT);
-        $pdf = Pdf::loadView('documents.pdf-template', $fichierVT->toArray());
-        // dd($fichierVT[0]);
-        return $pdf->download('invoice.pdf');
+        $pdf = Pdf::loadView('documents.pdf-stream-template', $fichierVT->toArray());
+        return $pdf->stream();
+    }
+
+    public function getPDFLink(Request $request)
+    {   
+        $PDFPath = public_path().'/storage/pdfs/'.$request->ficheVTC.'_ficheVT.pdf';
+        return Response::json($PDFPath);
     }
 
 }

@@ -56,4 +56,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Client::class, 'user_clients');
     }
 
+    public function messages(): HasMany
+    {
+        return $this->hasMany(NoaMessages::class, 'from_id');
+    }
+
 }

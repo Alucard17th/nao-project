@@ -117,6 +117,54 @@ class UserController extends Controller
 
     }
 
+    public function updateProfile(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'password' => ['nullable', 'string', 'max:255'],
+            'avatar' => ['nullable', 'mimes:jpg,jpeg,png,gif']
+        ]);
+
+        
+        $user = User::query()->find($id);
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        
+
+        if (!empty($validated['password'])) {
+            $user['password'] = Hash::make($validated['password']);
+        }
+
+        if (!empty($validated['avatar'])) {
+            $avatarPath = $request->file('avatar')->storeAs('avatars', auth()->user()->id.'-profile'.$request->file('avatar')->getClientOriginalName(), 'public');
+            $user->avatar = $avatarPath;
+        }
+
+        $user->save();
+
+        return redirect()->route('user.profile')->with('success', 'Profile mis à jours.');
+    }
+
+    public function updateCalendar(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'calendar' => ['required', 'max:255'],
+        ]);
+
+
+        $user = User::query()->find($id);
+
+        if ($user) {
+            $user['calendar_id'] = $validated['calendar'];
+          
+            $user->save();
+
+            return redirect()->route('user.profile')->with('calendar-success', 'Agenda enregistré.');
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -164,6 +212,12 @@ class UserController extends Controller
         $user = auth()->user();
         $user->unreadNotifications->markAsRead();
         return Response::json('Notifications marked as read');
+    }
+
+    public function userProfile()
+    {   
+        $user = auth()->user();
+        return view('profile.index', compact('user'));
     }
 
 }

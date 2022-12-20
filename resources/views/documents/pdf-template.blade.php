@@ -21,16 +21,16 @@
     <div>
         <h1>Nao<b>energy</b>SA</h1>
         <ul id="info">
-            <li><label>NPA:</label> {{$fichierVT[0]->npa}}</li>
-            <li><label>Date de Construction:</label> {{$fichierVT[0]->date_construction}}</li>
-            <li><label>Nombre de Panneaux:</label> {{$fichierVT[0]->nbre_panneaux}}</li>
-            <li><label>Puissance:</label> {{$fichierVT[0]->puissance}}</li>
-            <li><label>Marque:</label> {{$fichierVT[0]->marque}}</li>
-            <li><label>Type Onduleur:</label> {{$fichierVT[0]->type_onduleur}}</li>
-            <li><label>Batteries:</label> {{$fichierVT[0]->batteries}}</li>
-            <li><label>commentaires:</label> {{$fichierVT[0]->commentaire}}</li>
-            <li><label>Rendez-vous VT:</label> {{$fichierVT[0]->rdv_vt}}</li>
-            <li><label>Rendez-vous RBE:</label> {{$fichierVT[0]->rdv_rbe}}</li>
+            <li><label>NPA:</label> {{$fichierVT->npa}}</li>
+            <li><label>Date de Construction:</label> {{$fichierVT->date_construction}}</li>
+            <li><label>Nombre de Panneaux:</label> {{$fichierVT->nbre_panneaux}}</li>
+            <li><label>Puissance:</label> {{$fichierVT->puissance}}</li>
+            <li><label>Marque:</label> {{$fichierVT->marque}}</li>
+            <li><label>Type Onduleur:</label> {{$fichierVT->type_onduleur}}</li>
+            <li><label>Batteries:</label> {{$fichierVT->batteries}}</li>
+            <li><label>commentaires:</label> {{$fichierVT->commentaire}}</li>
+            <li><label>Rendez-vous VT:</label> {{$fichierVT->rdv_vt}}</li>
+            <li><label>Rendez-vous RBE:</label> {{$fichierVT->rdv_rbe}}</li>
         </ul>
     </div>
 </body>

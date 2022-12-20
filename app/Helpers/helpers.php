@@ -1,5 +1,6 @@
 <?php 
 use App\Models\User;
+use App\Models\NoaMessages;
 
 if(!function_exists('appendText')){
    function appendText(int $id = null){
@@ -15,6 +16,13 @@ if(!function_exists('getAllUsersName')){
         }
          
          return $user;
+     }
+ }
+
+ if(!function_exists('getUserUnreadMessages')){
+    function getUserUnreadMessages(int $user_id, int $sender_id){
+        $unread = NoaMessages::where([['from_id', $sender_id],['to_id', $user_id], ['seen', 0]])->count();
+         return $unread;
      }
  }
  

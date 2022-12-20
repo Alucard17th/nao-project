@@ -17,6 +17,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @stack('styles')
+    
+    <!-- Include Quill stylesheet -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+<link href="{{asset('assets/plugins/quill/quill.mention.min.css')}}" rel="stylesheet"/>
+
+    <script src="https://cdn.tiny.cloud/1/eyj09ui19insrjgbajnfwvwkr74i3vn6jdw4y5wid4logsh9/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 
 <body>
@@ -139,7 +145,7 @@
                             </a>
                             <div class="account-dropdown-form dropdown-container">
                                 <div class="form-content">
-                                    <a href="doctor-settings.html">
+                                    <a href="{{ route('user.profile') }}">
                                         <i class="far fa-user"></i>
                                         <span class="ml-2">Profile</span>
                                     </a>
@@ -181,7 +187,7 @@
             </div>
             <button type="button" class="btn position-relative">
                 <img style="width:22px" src="{{asset('assets/images/envelope.svg')}}" alt="">
-                <span class="position-absolute top-5 start-50 ms-3 translate-middle p-2 bg-danger border border-light rounded">
+                <span id="message-notification" class="d-none position-absolute top-5 start-50 ms-3 translate-middle p-2 bg-danger border border-light rounded">
                     <span class="visually-hidden">New alerts</span>
                 </span>
             </button>
@@ -226,6 +232,16 @@ crossorigin="anonymous"
 
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!-- Include the Quill Mention library -->
+<script src="{{asset('assets/plugins/quill/quill.min.js')}}"></script>
+<!-- Include the Quill library -->
+<script src="{{asset('assets/plugins/quill/quill.mention.min.js')}}"></script>
+
+
+
+
+
 <script>
     $(document).ready(function(){
         toastr.options = {

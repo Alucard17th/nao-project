@@ -49,7 +49,9 @@ window.Echo.private('App.Models.User.' + User.id)
 // });
 
 window.Echo.private('user.'+User.id).listen('.chat-message', (event) => {
+
     console.log(event)
+    $('#message-notification').removeClass( "d-none" )
 
     $('#contact-list').each(function(i, items_list){
         $(items_list).find('li').each(function(j, li){
@@ -57,15 +59,16 @@ window.Echo.private('user.'+User.id).listen('.chat-message', (event) => {
                console.log("Message received From ") 
                console.log(event.user.id)
                console.log(event.user.name)
-               $(li).append('<span class="badge bg-danger">Nouveau</span>')
+               $(li).children('div').children('span').html(parseInt($(li).children('div').children('span').html(), 10)+1)
+               console.log('LIST VAl ! ')
+               console.log($(li).children('div').children('span').html())
             }
-            // console.log($(li).data('sendto'));
         })
-
-        console.log()
     });
 
-    let message = `<li class="clearfix">
+    if($('#message-queue').data('sender') === event.user.id)
+    {
+        let message = `<li class="clearfix">
                         <div class="message-data">
                             <span class="message-data-time">10:10 AM, Today</span>
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
@@ -73,5 +76,13 @@ window.Echo.private('user.'+User.id).listen('.chat-message', (event) => {
                         <div class="message other-message">${event.message}</div>
                     </li>`;
                            
-    $("#message-queue").append(message)
+        $("#message-queue").append(message)
+        $('#chat-history').scrollTop(1000000);
+    }
+    
+
 });
+
+
+
+

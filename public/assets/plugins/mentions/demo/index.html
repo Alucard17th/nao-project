@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+   <head>
+      <link rel="stylesheet" href="../bin/mention.css">
+      <!-- User Styles -->
+      <style>
+         html, body{
+            padding:0px;
+            margin:0px;
+            background:#222;
+            font-family: 'Karla', sans-serif;
+            color:#FFF;
+         }
+         h3{ text-align:center; }
+         .demo{
+            display:flex;
+            max-width:600px;
+            margin:0px auto;
+         }
+
+         #optionsZone {
+            position:relative;
+            top:0px;
+         }
+
+         #data {
+            background:transparent;
+            border:none;
+            display:block;
+            width:100%;
+            height:400px;
+            color:#FFF;
+            flex:1;
+            padding:20px;
+            overflow:auto;
+            white-space:nowrap;
+            tab-size: 16px;
+            flex:1;
+            padding:10px;
+				margin:0px;
+
+         }
+         .mention-wrapper {
+            width:50%;
+         }
+         #textarea{
+            border-radius:4px;
+            height:100px;
+            flex:1;
+            box-sizing:border-box;
+            background:#FFF;
+            display:block;
+            margin:0;
+            resize:none;
+            padding:10px;
+            outline:none;
+            color:#333;
+            font-size:16px;
+				font-family: 'Karla', sans-serif;
+            border:3px solid transparent;
+            font-weight:400;
+
+         }
+         #textarea:focus{
+            border:3px solid #999;
+         }
+
+         .mention-options {
+            border:3px solid #999;
+            margin-top:-3px;
+         }
+
+         .mention-option {
+            padding:5px 10px;
+         }
+      </style>
+   </head>
+   <body>
+      <h3>@ Input</h3>
+      <div id="optionsZone"></div>
+      <div class="demo">
+         <textarea id="textarea"></textarea>
+         <textarea id="data"></textarea>
+      </div>
+      <script src="../bin/mention.js"></script>
+      <script>
+         var myMention = new Mention({
+            input: document.querySelector('#textarea'),
+            options: [
+               { id: 2, name: 'WideEye', description: 'Wideeye Potion' },
+               { id: 100, name: 'LiquidLuck', description: 'Felix Felicis' },
+               { id: 10, name: 'PolyJuice', description: 'Polyjuice Potion' }
+            ],
+            update: function() {
+               document.querySelector('#data').innerHTML = JSON.stringify(this.findMatches(), null, '\t')
+            },
+            match: function(word, option) {
+               return option.name.startsWith(word)
+                  || option.description.toLowerCase().indexOf(word.toLowerCase()) >= 0
+            },
+            template: function(option) {
+               return '@' + option.name + ' [' + option.description + ']'
+            }
+         })
+
+      </script>
+   </body>
+</html>

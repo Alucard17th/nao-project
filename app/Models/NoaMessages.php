@@ -10,4 +10,11 @@ class NoaMessages extends Model
     use HasFactory;
 
     protected $fillable = ['from_id', 'to_id', 'body', 'attachment', 'seen'];
+    protected $casts = [
+        'attachment' => 'array'
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'from_id');
+    }
 }

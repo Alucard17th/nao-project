@@ -41,6 +41,10 @@
   background-color: DodgerBlue !important; 
   color: #ffffff; 
 }
+
+.ql-mention-list-container {
+    top: 7vh!important;
+}
 </style>
 @endpush
 
@@ -117,13 +121,13 @@
                                     </svg>
                                     Compléter/Modifier
                                 </a>
-                                <a href="{{ url('/dashboard/pdf/'.$fichevtc) }}" type="button" class="btn fvt-panel-actions-btn d-flex flex-column align-items-center me-2">
+                                <a href="{{ url('/dashboard/pdf/'.$fichevtc) }}" type="button" class="btn fvt-panel-actions-btn d-flex flex-column align-items-center me-2" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z"/>
                                     </svg>
                                     Visualiser
                                 </a>
-                                <a href="{{ url('/dashboard/createfvt/edit/') }}" type="button" class="btn fvt-panel-actions-btn d-flex flex-column align-items-center me-2">
+                                <a id="share-fvt" href="{{ url('/dashboard/createfvt/edit/') }}" type="button" class="btn fvt-panel-actions-btn d-flex flex-column align-items-center me-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
                                     </svg>
@@ -140,10 +144,10 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header client-lists_header_two">
-                            <table class="table">
+                            <table class="table" id="todo-list-table">
                                 <thead>
                                     <tr>
-                                    <th scope="col">#</th>
+                                    <!-- <th scope="col">#</th> -->
                                     <th scope="col">Action</th>
                                     <th scope="col">Statut</th>
                                     <th scope="col">Délais</th>
@@ -153,10 +157,10 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($tasks as $task)
-                                        <tr>
-                                            <th scope="row">{{$task->id}}</th>
+                                        <tr class="gx-5">
+                                            <!-- <th scope="row">{{$task->id}}</th> -->
                                             <td>{{$task->description}}</td>
-                                            <td class="d-flex">
+                                            <td class="">
                                                 @if($task->status === 'Fait')
                                                     <span class="badge bg-success">{{$task->status}}</span>
                                                 @elseif($task->status === 'En cours')
@@ -187,7 +191,9 @@
                                                             $start_day = $start_date[2];
                                                             $st = DateTime::createFromFormat('!m', $start_month);
                                                         ?>
-                                                        <p class="start-date-display">{{str_replace('"', '', $start_day).' '.substr($st->format('F'), 0, 3)}}</p>
+                                                        <a href="#" class="modal-delais" data-tid="{{$task->id}}" data-stdate="{{$task->delais[0]['start']}}" data-enddate="{{$task->delais[0]['end']}}">
+                                                            <p class="start-date-display" data-tid="{{$task->id}}" data-stdate="{{$task->delais[0]['start']}}" data-enddate="{{$task->delais[0]['end']}}">{{str_replace('"', '', $start_day).' '.substr($st->format('F'), 0, 3)}}</p>
+                                                        </a>
                                                     @endif
                                                     @if(!is_null($task->delais[0]['end']))
                                                         <?php $delai_end = json_encode($task->delais[0]['end']); ?>
@@ -198,14 +204,16 @@
                                                             $end_day = $end_date[2];
                                                             $end = DateTime::createFromFormat('!m', $end_month);
                                                         ?>
-                                                        <p class="end-date-display">&nbsp;- {{str_replace('"', '', $end_day).' '.substr($end->format('F'), 0, 3)}}</p>
+                                                        <a href="#" class="modal-delais" data-tid="{{$task->id}}" data-stdate="{{$task->delais[0]['start']}}" data-enddate="{{$task->delais[0]['end']}}">
+                                                            <p class="end-date-display" data-tid="{{$task->id}}" data-stdate="{{$task->delais[0]['start']}}" data-enddate="{{$task->delais[0]['end']}}">&nbsp;- {{str_replace('"', '', $end_day).' '.substr($end->format('F'), 0, 3)}}</p>
+                                                        </a>
                                                     @endif
-                                                    <button id="edit-delais" class="btn modal-delais" data-tid="{{$task->id}}" data-stdate="{{$task->delais[0]['start']}}" data-enddate="{{$task->delais[0]['end']}}">
+                                                    <!-- <button id="edit-delais" class="btn modal-delais" data-tid="{{$task->id}}" data-stdate="{{$task->delais[0]['start']}}" data-enddate="{{$task->delais[0]['end']}}">
                                                         <img src="{{asset('assets/images/calendar-plus.svg')}}" data-tid="{{$task->id}}" data-stdate="{{$task->delais[0]['start']}}" data-enddate="{{$task->delais[0]['end']}}">
-                                                    </button>
+                                                    </button> -->
                                                 @else
-                                                    <p class="start-date-display"></p>
-                                                    <p class="end-date-display"></p>
+                                                    <a href="#" class="modal-delais start"><p class="start-date-display"></p></a>
+                                                    <a href="#" class="modal-delais end"><p class="end-date-display"></p></a>
                                                     <button id="edit-delais" class="btn modal-delais" data-tid="{{$task->id}}">
                                                         <img src="{{asset('assets/images/calendar-plus.svg')}}" data-tid="{{$task->id}}">
                                                     </button>
@@ -213,13 +221,16 @@
                                                 </div>
                                             </td>
                                             <td>
-                                            @if(!is_null($task->notifiables))
-                                                @foreach ($task->notifiables as $notifiable)
-                                                <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="notifiables-avatar">
-                                                    <!-- <li>{{$notifiable['name']}}</li> -->
-                                                @endforeach
-                                            @endif
-                                                <button id="add-notifiable" class="btn modal-notifiables" data-taskid="{{$task->id}}" data-notifiables="{{json_encode($task->notifiables)}}">+</button>
+                                                <div class="row">
+                                                    @if(!is_null($task->notifiables))
+                                                        @foreach ($task->notifiables as $notifiable)
+                                                            <div class="notifiables-avatars col-2">
+                                                                <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="notifiables-avatar">
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                    <button id="add-notifiable" class="btn modal-notifiables col" data-taskid="{{$task->id}}" data-notifiables="{{json_encode($task->notifiables)}}">+</button>
+                                                </div>
                                             </td>
                                             <td>
                                                 @if(!is_null($task->attachements))
@@ -258,8 +269,48 @@
                     </div>
                 </div>
 
+                <!-- Share FVT Modal Start-->
+                <div class="modal fade todo-modal" id="shareFTVModal" tabindex="-1" aria-labelledby="shareFTVModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form id="shareFTV-form" autocomplete="off">
+                                <div class="mt-1 mb-1">
+                                    <!--Bootstrap classes arrange web page components into columns and rows in a grid -->
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-md-12">
+                                            <label class="h4 mb-4">Envoyer un message</label>
+                                            <div class="form-group">
+                                                <div id="editor" style="height:40vh;"></div>
+                                            </div>
+                                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <button type="button" class="btn btn-outline-primary">Primary</button> -->
+                                <div class="justify-content-center">
+                                    <label class="btn btn-primary" for="my-file-selector">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+                                            <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"></path>
+                                        </svg>
+                                        <input id="my-file-selector" type="file" style="display:none" 
+                                        onchange="$('#upload-file-info').text(this.files[0].name)">
+                                        Ajout de fichiers
+                                    </label>
+                                    <input type="file" name="files[]" id="files" placeholder="Choose files" multiple >
+                                    <span class='label label-info' id="upload-file-info"></span>
+                                    <ul class="list-group" id="upload-file-list"></ul>
+                                    <input class="btn btn-primary" type="submit" id="shareFVT" value="Envoyer">
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Share FVT Modal End -->
+
                 <!-- Notifiables Modal Start-->
-                <div class="modal fade" id="notifiablesModal" tabindex="-1" aria-labelledby="notifiablesModalLabel" aria-hidden="true">
+                <div class="modal fade todo-modal" id="notifiablesModal" tabindex="-1" aria-labelledby="notifiablesModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -271,7 +322,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <input class="btn" type="button" id="addNotifiable" value="+ Ajouter">
+                                    <input class="btn btn-primary mt-3" type="button" id="addNotifiable" value="+ Ajouter">
                                 </form>
                             </div>
                             <!-- <div class="modal-footer">
@@ -284,26 +335,26 @@
                 <!-- Notifiables Modal End -->
 
                 <!-- Delais Modal Start-->
-                <div class="modal fade" id="delaisModal" tabindex="-1" aria-labelledby="delaisModalLabel" aria-hidden="true">
+                <div class="modal fade todo-modal" id="delaisModal" tabindex="-1" aria-labelledby="delaisModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <form id="delais-form" autocomplete="off">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Début (de)</label>
-                                    <input id="start-delai-input" name="startdelai" type="date" class="form-control">
-                                    <small id="start-delai" class="invalid-feedback">
-                                        Veuillez choisir une date valide
-                                    </small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Fin (à)</label>
-                                    <input id="end-delai-input" name="enddelai" type="date" class="form-control">
-                                    <small id="end-delai" class="invalid-feedback">
-                                        Your email must be a valid email
-                                    </small>
-                                </div>
-                                    <input class="btn" type="submit" id="addDelais" value="+ Enregister les Délais">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Début (de)</label>
+                                        <input id="start-delai-input" name="startdelai" type="date" class="form-control">
+                                        <small id="start-delai" class="invalid-feedback">
+                                            Veuillez choisir une date valide
+                                        </small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Fin (à)</label>
+                                        <input id="end-delai-input" name="enddelai" type="date" class="form-control">
+                                        <small id="end-delai" class="invalid-feedback">
+                                            Your email must be a valid email
+                                        </small>
+                                    </div>
+                                    <input class="btn btn-primary mt-3" type="submit" id="addDelais" value="+ Enregister les Délais">
                                 </form>
                             </div>
                         </div>
@@ -312,7 +363,7 @@
                 <!-- Delais Modal End -->
 
                 <!-- Files Modal Start-->
-                <div class="modal fade" id="filesModal" tabindex="-1" aria-labelledby="filesModalLabel" aria-hidden="true">
+                <div class="modal fade todo-modal" id="filesModal" tabindex="-1" aria-labelledby="filesModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -324,7 +375,7 @@
                                         Veuillez choisir une date valide
                                     </small>
                                 </div>
-                                <input class="btn" type="submit" id="addFiles" value="+ Enregister les Fichiers">
+                                <input class="btn btn-primary mt-3" type="submit" id="addFiles" value="+ Enregister les Fichiers">
                                 </form>
                             </div>
                         </div>
@@ -353,6 +404,7 @@
     var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
     var modalToggle = document.getElementById('modalTrigger') // relatedTarget
     var notifiablesSelect = document.getElementById('multiple-select-field')
+    var shareFile = document.getElementById('share-fvt')
 
     const userSelection = Object.values(document.getElementsByClassName('modal-notifiables'))
     const dateSelection = Object.values(document.getElementsByClassName('modal-delais'))
@@ -396,13 +448,13 @@
     dateSelection.forEach(link => {
         link.addEventListener("click", function(e) {
             event.preventDefault();
-            $('#delaisModal').modal('show');
-            taskID = $(e.target).data('tid')
-
+            taskID = $(e.target).data('tid');
             $('#start-delai-input').val($(e.target).data('stdate'));
             $('#end-delai-input').val($(e.target).data('enddate'));
-            
-            editDateButtonNode = $(e.target).parent().closest('td')
+            editDateButtonNode = $(e.target).parent().closest('td');
+            console.log($(e.target).data('stdate'))
+            console.log($(e.target).data('enddate'))
+            $('#delaisModal').modal('show');
         });
     });
 
@@ -488,8 +540,11 @@
             data: {notifiables: data, taskId: taskID},
             success: function (data) {
                 toastr.success('Utilisateur ajouté avec succès')
-                console.log(data)
-                $(editNotifiablesButtonNode).prepend('<img class="notifiables-avatar" src="https://www.w3schools.com/howto/img_avatar.png" />')
+                $(editNotifiablesButtonNode).children('div').empty()
+                console.log($(editNotifiablesButtonNode).children('div'))
+                data.forEach(element => 
+                    $(editNotifiablesButtonNode).children('div').append('<div class="notifiables-avatars col-2"><img class="notifiables-avatar" src="https://www.w3schools.com/howto/img_avatar.png" /></div>')
+                );
             },
             error: function (e) {
                 toastr.error('Error')
@@ -499,7 +554,6 @@
 
     addDelaisToList.addEventListener("click", function(e) {
         event.preventDefault();
-        // const { startdelai, enddelai } = Object.fromEntries(new FormData(e.target))
         
         var form_data = new FormData(document.getElementById("delais-form"));
         const { startdelai, enddelai } = Object.fromEntries(form_data)
@@ -509,10 +563,6 @@
             $("#start-delai").show();
             $("#end-delai").hide();
         }
-        // else if(enddelai.length == ""){
-        //     $("#start-delai").hide();
-        //     $("#end-delai").show();
-        // }
         else{
             $("#start-delai").hide();
             $("#end-delai").hide();
@@ -531,15 +581,39 @@
                     let month = date.toLocaleString('en-US', { month: 'short' });
                     let day = date.getUTCDate() ;
                     let fullDate = day + " " + month
-                    $(editDateButtonNode).children('div').children('p.start-date-display').text(fullDate)
-                   
+
+                    $(editDateButtonNode).children('div').children('a').children('p.start-date-display').text(fullDate)
+
+                    $(editDateButtonNode).children('div').children('a.start').attr('data-stdate', startdelai);
+                    $(editDateButtonNode).children('div').children('a.start').attr('data-tid', taskID);
+
+                    $(editDateButtonNode).children('div').children('a').children('p.start-date-display').attr('data-stdate', startdelai);
+                    $(editDateButtonNode).children('div').children('a').children('p.start-date-display').attr('data-tid', taskID);
+                    
+                    $('#edit-delais').hide();
                     if(enddelai !== '')
                     {
+                        $(editDateButtonNode).children('div').children('a.end').data('sdate', fullDate);
                         date = new Date(enddelai); 
                         month = date.toLocaleString('en-US', { month: 'short' });
                         day = date.getUTCDate() ;
                         fullDate = "\xa0- " + day + " " + month
-                        $(editDateButtonNode).children('div').children('p.end-date-display').text(fullDate)
+                        $(editDateButtonNode).children('div').children('a').children('p.end-date-display').text(fullDate)
+
+                        $(editDateButtonNode).children('div').children('a.end').attr('data-stdate', startdelai)
+                        $(editDateButtonNode).children('div').children('a.end').attr('data-enddate', enddelai)
+                        $(editDateButtonNode).children('div').children('a.end').attr('data-tid', taskID)
+
+                        
+                        $(editDateButtonNode).children('div').children('a').children('p.end-date-display').attr('data-stdate', startdelai);
+                        $(editDateButtonNode).children('div').children('a').children('p.end-date-display').attr('data-enddate', enddelai);
+                        $(editDateButtonNode).children('div').children('a').children('p.end-date-display').attr('data-tid', taskID);
+
+                        $(editDateButtonNode).children('div').children('a.start').attr('data-enddate', enddelai);
+                        $(editDateButtonNode).children('div').children('a').children('p.start-date-display').attr('data-enddate', enddelai);
+
+                        // $(editDateButtonNode).children('div').children('a.start').attr('data-enddate', fullDate)
+
                     }
                 },
                 error: function (e) {
@@ -595,6 +669,257 @@
             }
         });
     })
+
+    shareFile.addEventListener("click", function(e) {
+        e.preventDefault()
+        var ficheVTC = {!! json_encode($fichevtc) !!}
+        console.log(ficheVTC)
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': CSRF_TOKEN
+            },
+            type: 'GET',
+            url: '{{ route('fichevt.getpdflink') }}',
+            data: {ficheVTC: ficheVTC},
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (e) {
+                toastr.error('Error')
+            }
+        });
+        $('#shareFTVModal').modal('show');
+    })
+
+
+
+    // tinymce.init({
+    //     selector: 'textarea#editor',
+    //     skin: 'bootstrap',
+    //     plugins: 'lists, link, image, media',
+    //     toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+    //     menubar: false,
+    // });
+
+    
+
+    var atValues = [
+        { id: "515fd775-cb54-41f3-b921-56163871e2cf", value: "Mickey Dooley" },
+        { id: "3f0b7933-57b8-4d9d-b238-f8af62b2e945", value: "Desmond Waterstone" },
+        { id: "711f68ab-ca20-4011-ab0f-d98c8fac4c05", value: "Jeralee Fryd" },
+        { id: "775e05fc-72bc-48a1-9508-5c61674734f1", value: "Eddie Hucquart" },
+        { id: "e8701885-105e-4a21-b200-98e559776655", value: "Nathalia Whear" }
+      ];
+
+      const hashValues = [
+        { id: "0075256a-19c2-4a2d-b549-627000bcc3bc", value: "Accounting" },
+        {
+          id: "91e8901b-e3bf-4158-8ddf-7f5d9e8cbb7f",
+          value: "Product Management"
+        },
+        { id: "c3373e89-7ab8-4a45-8b69-0b0cc49d89a9", value: "Marketing" },
+        { id: "fa22f1d2-16c8-4bea-b869-8acad16e187a", value: "Engineering" },
+        { id: "fe681168-f315-42f0-b78b-b1ea787fa1fd", value: "Accounting" }
+      ];
+
+    const advancedValues = [
+        { id: "1", value: "Manuel Neuer", team: "Bayern Munich" },
+        { id: "2", value: "Robert Lewandowski", team: "Bayern Munich" },
+        { id: "3", value: "Thomas Muller", team: "Bayern Munich" },
+        { id: "4", value: "Roman Burki", team: "Borussia Dortmund" },
+        { id: "5", value: "Jadon Sancho", team: "Borussia Dortmund" },
+        { id: "6", value: "Marco Reus", team: "Borussia Dortmund" },
+        { id: "7", value: "Alexander Nubel", team: "Schalke 04" },
+        { id: "8", value: "Bastian Oczipka", team: "Schalke 04" },
+        { id: "9", value: "Weston McKennie", team: "Schalke 04" }
+    ];
+     var arrValues = []
+    // var jobs = JSON.parse("{!! json_encode($notifiablesUsers) !!}");
+    var job = {!! json_encode($notifiablesUsers ) !!}
+    job.forEach((x, i) => 
+        arrValues.push({id:x.id ,value:x.name})
+    );
+
+    console.log("MY OPTIONAL ID VALUE")
+    console.log(arrValues)
+
+    // console.log(job)
+    // console.log(job[0].name)
+    atValues = arrValues
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+        ['link'],
+        ['clean']     // remove formatting button
+    ]               
+                         
+    var quill = new Quill("#editor", {
+        placeholder: "Start by typing @ for mentions or # for hashtags...",
+        theme: 'snow',
+        modules: {
+            toolbar: toolbarOptions,
+            mention: {
+                allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+                mentionDenotationChars: ["@", "#"],
+                source: function(searchTerm, renderList, mentionChar) {
+                let values;
+
+                if (mentionChar === "@") {
+                    values = atValues;
+                } else {
+                    values = hashValues;
+                }
+
+                if (searchTerm.length === 0) {
+                    renderList(values, searchTerm);
+                } else {
+                    const matches = [];
+                    for (i = 0; i < values.length; i++)
+                    if (
+                        ~values[i].value
+                        .toLowerCase()
+                        .indexOf(searchTerm.toLowerCase())
+                    )
+                        matches.push(values[i]);
+                    renderList(matches, searchTerm);
+                }
+                },
+                onOpen: function(){
+                    console.log("IT IS OPEN!")
+                },
+                // onSelect: function(item, insertItem){
+                //     console.log("SELECTED : " + item)
+                // }
+            }
+        }
+    });
+
+    
+      function showMenu() {
+        quill2.getModule("mention").openMenu("@");
+      }
+
+      function addMention() {
+        quill2.getModule("mention").insertItem(
+          {
+            denotationChar: "@",
+            id: "123abc",
+            value: "Hello World",
+          },
+          true
+        );
+      }
+         window.addEventListener("ql-mention-list-item-clicked", function(event) {
+        console.log(event);
+      })
+    //   window.addEventListener("mention-clicked", function(event) {
+    //     console.log(event);
+    //   })
+//       window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
+//   window.addEventListener('mention-clicked', (event) => {console.log('hovered: ', event)}, false);
+
+      let allFilesArray = []
+    document.getElementById("my-file-selector").addEventListener('change', (event) => {
+        let fileInput = event.target
+        console.log(fileInput.files[0])
+        console.log($('#upload-file-info'))
+        $('#upload-file-info').text(fileInput.files[0].name)
+        $('#upload-file-list').append('<li class="list-group-item d-flex justify-content-between align-items-center">'+
+            fileInput.files[0].name +'<button type="button" class="btn btn-danger delete-file" onclick="deleteFile(event)">Delete</button></li>');
+        
+            allFilesArray.push(fileInput.files[0])
+    });
+
+    function deleteFile(e) {
+        console.log(e.target.parentElement)
+        $(e.target.parentElement).remove();
+    }
+
+    document.getElementById('shareFVT').addEventListener("click", function(e) {
+        e.preventDefault()
+        var delta = quill.getContents();
+       
+        let htmlv = null
+        html = delta.slice(0, 500).ops.map(function(op) {
+            let arrayStr = []
+            if (typeof op.insert !== 'string') {
+                arrayStr.push('@' + op.insert.mention.value)
+                htmlv += '@' + op.insert.mention.value;
+            }else{
+                arrayStr.push(op.insert)
+                htmlv += op.insert;
+            }
+            return arrayStr;
+        }).join('');
+
+        arrayIDTo = []
+        idsArray = delta.slice(0, 500).ops.map(function(op) {
+            let arrayIds = []
+            if (typeof op.insert !== 'string') {
+                arrayIds.push(op.insert.mention.id)
+                arrayIDTo.push(op.insert.mention.id)
+            }
+            return arrayIds;
+        }).join('');
+        console.log("ARRAY IDS")
+        console.log(arrayIDTo)
+        var fd = new FormData();
+        fd.append('files', allFilesArray);
+        fd.append('allReceivers', idsArray);
+        fd.append('messageContent', quill.root.innerHTML);
+
+        var formData = new FormData();
+        let TotalFiles = $('#files')[0].files.length; //Total files
+        let files = $('#files')[0];
+        for (let i = 0; i < TotalFiles; i++) {
+            formData.append('files' + i, files.files[i]);
+        }
+
+        formData.append('TotalFiles', TotalFiles);
+        formData.append('files', allFilesArray);
+        formData.append('allReceivers', arrayIDTo);
+        formData.append('messageContent', quill.root.innerHTML);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': CSRF_TOKEN
+            },
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            cache:false,
+            type: 'POST',
+            url: '{{ route('chat.shareFiles') }}',
+            data: formData,
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (e) {
+                console.log(e)
+                toastr.error('Error')
+            }
+        });
+    })
+
+    
+
+    
+
+
+
+    
+
 </script>
    
 @endpush

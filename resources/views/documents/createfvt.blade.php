@@ -26,6 +26,13 @@
                     </div>
                 </div>
                 @include('includes.alert_messages')
+                <div class="col-md-12 mt-2">
+                    @if(session()->has('calendar-error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session()->get('calendar-error') }}
+                        </div>
+                    @endif
+                </div> 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">

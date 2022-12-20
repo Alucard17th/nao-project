@@ -52,6 +52,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/dashboard/pdf/{fiche_id}', [FicheVTController::class, 'pdf'])->name('fichevt.pdf');
     Route::post('/dashboard/createfvt/create', [FicheVTController::class, 'create'])->name('fichevt.create');
     Route::post('/dashboard/editfvt/{fiche_id}', [FicheVTController::class, 'update'])->name('fichevt.update');
+    Route::get('/dashboard/getpdflink', [FicheVTController::class, 'getPDFLink'])->name('fichevt.getpdflink');
 
     Route::get('/dashboard/todo-lists', [TodoListController::class, 'index'])->name("todos.index");
     Route::post('/dashboard/todo-lists/updatenotifiables', [TodoListController::class, 'updateNotifiables'])->name('updatenotifiables');
@@ -60,6 +61,9 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('/dashboard/todo-lists/updatetaskstatut', [TodoListController::class, 'updateStatut'])->name('updatetaskstatut');
 
     Route::get('/dashboard/notifications', [UserController::class, 'notificationsList'])->name("user.notifications");
+    Route::get('/dashboard/profile', [UserController::class, 'userProfile'])->name("user.profile");
+    Route::post('/dashboard/profile/{id}', [UserController::class, 'updateProfile'])->name("user.updateProfile");
+    Route::post('/dashboard/profile/calendar/{id}', [UserController::class, 'updateCalendar'])->name("user.updateCalendar");
     Route::post('/dashboard/notifications/markasread', [UserController::class, 'markNotificationAsRead'])->name("notificationsmarkasread");
 
 });
@@ -101,6 +105,8 @@ Route::get('/notify', function(){
 Route::resource('chat', ChatController::class);
 
 Route::post('/chat/getchat', [ChatController::class, 'getChat'])->name('getchat');
+Route::get('/createEvent', [ChatController::class, 'createEvent'])->name('createEvent');
+Route::post('/shareFiles', [ChatController::class, 'shareFiles'])->name('chat.shareFiles');
 
 Route::get('/dashboard/usersclients', [ProjectController::class, 'usersClients'])->name('usersclients');
     

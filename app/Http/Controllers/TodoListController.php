@@ -63,7 +63,7 @@ class TodoListController extends Controller
         $task->notifiables = array_merge($final_notifiables);
         $task->save();
       
-        return Response::json($task);
+        return Response::json($task->notifiables);
     }
 
     // UPDATE THE USERS TO BE NOTIFIED FOR A TASK

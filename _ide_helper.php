@@ -17415,97 +17415,6 @@
      
 }
 
-    namespace Spatie\GoogleCalendar { 
-            /**
-     * 
-     *
-     */ 
-        class GoogleCalendarFacade {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getCalendarId()
-        {
-                        /** @var \Spatie\GoogleCalendar\GoogleCalendar $instance */
-                        return $instance->getCalendarId();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function listEvents($startDateTime = null, $endDateTime = null, $queryParameters = [])
-        {
-                        /** @var \Spatie\GoogleCalendar\GoogleCalendar $instance */
-                        return $instance->listEvents($startDateTime, $endDateTime, $queryParameters);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getEvent($eventId)
-        {
-                        /** @var \Spatie\GoogleCalendar\GoogleCalendar $instance */
-                        return $instance->getEvent($eventId);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function insertEvent($event, $optParams = [])
-        {
-                        /** @var \Spatie\GoogleCalendar\GoogleCalendar $instance */
-                        return $instance->insertEvent($event, $optParams);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function insertEventFromText($event)
-        {
-                        /** @var \Spatie\GoogleCalendar\GoogleCalendar $instance */
-                        return $instance->insertEventFromText($event);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function updateEvent($event, $optParams = [])
-        {
-                        /** @var \Spatie\GoogleCalendar\GoogleCalendar $instance */
-                        return $instance->updateEvent($event, $optParams);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function deleteEvent($eventId, $optParams = [])
-        {
-                        /** @var \Spatie\GoogleCalendar\GoogleCalendar $instance */
-                        return $instance->deleteEvent($eventId, $optParams);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getService()
-        {
-                        /** @var \Spatie\GoogleCalendar\GoogleCalendar $instance */
-                        return $instance->getService();
-        }
-         
-    }
-     
-}
-
     namespace Illuminate\Http { 
             /**
      * 
@@ -21097,7 +21006,6 @@ namespace  {
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Chatify extends \Chatify\Facades\ChatifyMessenger {}
             class Laratrust extends \Laratrust\LaratrustFacade {}
-            class GoogleCalendar extends \Spatie\GoogleCalendar\GoogleCalendarFacade {}
      
 }
 

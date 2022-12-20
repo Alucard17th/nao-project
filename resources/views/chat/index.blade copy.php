@@ -57,7 +57,6 @@ body{
 
 .people-list .chat-list img {
     width: 45px;
-    height:45px;
     border-radius: 50%
 }
 
@@ -95,7 +94,7 @@ body{
 .chat .chat-history {
     padding: 20px;
     border-bottom: 2px solid #fff;
-    height:50vh;
+    height:66vh;
     overflow:scroll;
 }
 
@@ -128,7 +127,7 @@ body{
 
 .chat .chat-history .message {
     color: #444;
-    padding: 8px 20px;
+    padding: 18px 20px;
     line-height: 26px;
     font-size: 16px;
     border-radius: 7px;
@@ -262,30 +261,34 @@ body{
 }
 </style>
 @endpush
-
 @section('content')
     <!-- End section header -->
     <!-- start section content -->
     <div class="content-body">
         <div class="warper container-fluid">
             <div class="new-patients main_container ">
+                <div class="row page-titles mx-0 progression">
+                    <div class="col-sm-6">
+                        <div class="welcome-text">
+                            <h4 style="color : #7B73CE !important;">Chat</h4>
+                        </div>
+                    </div>
+                </div>
                 <div class="row clearfix">
                     <div class="col-lg-12">
                         <div class="card chat-app" style="z-index:0; height:100%;">
                             <div id="plist" class="people-list">
                                 <ul class="list-unstyled chat-list mt-2 mb-0" id="contact-list" style="overflow-x: auto; height:66vh;">
                                     @foreach($users as $user)
-                                        @if($user->id !== auth()->user()->id)
-                                            <li class="clearfix active contact-select d-flex" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">
-                                                <div class="about" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">
-                                                    <div class="name" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">{{$user->name}}</div>
-                                                    <div class="status" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}"> <i class="fa fa-circle online"></i> online </div>
-                                                    <span class="badge bg-danger messages-count" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">{{getUserUnreadMessages(auth()->user()->id,$user->id)}}</span>
-                                                    
-                                                </div>
-                                            </li>
-                                        @endif
+                                    @if($user->id !== auth()->user()->id)
+                                        <li class="clearfix active contact-select" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">
+                                            <div class="about" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">
+                                                <div class="name" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}">{{$user->name}}</div>
+                                                <div class="status" data-sendto="{{$user->id}}" data-sendtoname="{{$user->name}}"> <i class="fa fa-circle online"></i> online </div>
+                                            </div>
+                                        </li>
+                                    @endif
                                     @endforeach
                                 </ul>
                             </div>
@@ -309,7 +312,7 @@ body{
                                         </div>
                                     </div>
                                 </div>
-                                <div class="chat-history" id="chat-history">
+                                <div class="chat-history">
                                     <ul class="m-b-0" id="message-queue">
                                         <div class="alert alert-secondary" role="alert">
                                             Sélectionnez un contact pour commercer une conversation!
@@ -377,9 +380,7 @@ body{
             let sendToName = $(e.target).data('sendtoname')
            
             sendToNameLabel.innerHTML = sendToName
-            // $(li).children('div').children('span').html(parseInt($(li).children('div').children('span').html(), 10)+1)
-            
-            
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': CSRF_TOKEN
@@ -389,13 +390,6 @@ body{
                 data: {sendTo: sendTo},
                 success: function (data) {
                     $('#message-queue').empty()
-                    $('#message-queue').data('sender', sendTo);
-                    
-                    contactSelection.forEach(element => {
-                        if($(element).data('sendto') === sendTo){
-                            $(element).children('div').children('span').html(0)
-                        }
-                    })  
 
                     data.forEach(function(msg) {
                         if(msg.from_id === sendTo)
@@ -421,8 +415,6 @@ body{
                             $('#message-queue').append(message)
                         }
                     });
-
-                    $('#chat-history').scrollTop(1000000);
                 },
                 error: function (e) {
                     
@@ -431,10 +423,9 @@ body{
         })
     })
 
-    
-
     submitButton.addEventListener('click', () => {
 
+        // APPEND SENT MESSAGE 
         let sentMessage = `<li class="clearfix">
                             <div class="message-data text-right">
                                 <span class="message-data-time">10:10 AM, Today</span>
@@ -443,7 +434,6 @@ body{
                             <div class="message other-message float-right">${message.value}</div>
                         </li>`;
         $('#message-queue').append(sentMessage)
-        $('#chat-history').scrollTop(1000000);
 
         $.ajax({
             headers: {

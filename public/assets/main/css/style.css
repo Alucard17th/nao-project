@@ -8263,4 +8263,15 @@ button.owl-dot.active span {
     width:35px;
 }
 
+/* TODO LISTS MODAL */
+.todo-modal .modal-content{
+    background-color: #fff!important;
+}
+
+#todo-list-table td{
+    background-color: #f2f1fa;
+    border: 5px solid;
+    border-color:#fff;
+}
+
 /*# sourceMappingURL=style.css.map */
